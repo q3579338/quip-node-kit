@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+state/
+data/
+instances/
+snapshots/
+backups/
+*.keystore*
+keystore.json
+signing.json
+*.pem
+*.key
+*.log
+test-results/
