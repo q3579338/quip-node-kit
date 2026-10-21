@@ -4,9 +4,17 @@
 
 **社区工具，非 QUIP 官方。核对日期：2026-10-22。** 当前适配 Aglais spec119；不承诺空投、固定日收益或多开增分。
 
+## 从这里开始：作者 888 邀请入口
+
+### [打开 QUIP 账户，跟着教程参与 →](https://account.quip.network/?ref=0xa9EE18b34Ec00664D73d89b8F8BBA68bEB888888)
+
+**这是作者的推荐链接，邀请方为 888 结尾的钱包。** 用你自己的参与钱包打开并核对页面地址，再按教程完成账户流程。是否计入推荐，以官方记录为准；也可选择[无推荐参数的官网入口](https://account.quip.network/)。
+
 ## 先看哪一份
 
 - [完整中文教程：任务、邀请、积分、钱包与节点](docs/tutorial.zh-CN.md)
+- [适合 X 长文章发布的详细实操稿](docs/x-long-article.zh-CN.md)
+- [Mindshare 活动规则与发布核对](docs/mindshare.zh-CN.md)
 - [部署参数与运维命令](docs/node-guide.zh-CN.md)
 - [可自行修改发布的推文](docs/x-posts.zh-CN.md)
 - [版本验证范围](docs/validation.md)

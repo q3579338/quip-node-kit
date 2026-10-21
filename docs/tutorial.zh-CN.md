@@ -4,6 +4,16 @@
 
 这份教程想解决的是：知道自己做了什么、积分记到哪个钱包、节点有没有真正运行。不会把多开、测试币或某个高积分样本写成收益保证。
 
+## 跟着做的起点：888 邀请入口
+
+### [点击这里，通过作者邀请链接打开 QUIP 账户 →](https://account.quip.network/?ref=0xa9EE18b34Ec00664D73d89b8F8BBA68bEB888888)
+
+这是作者的推荐链接，`ref` 指向作者 888 结尾的公开钱包。打开后连接**你自己的参与钱包**，先核对所选地址，再继续。推荐是否生效、账户是否创建，以网站最终记录为准。
+
+第一次参与，建议按「准备账号 → 做开放任务 → 创建账户时核对网络与费用 → 有闲置服务器再跑节点 → 保存积分快照」的顺序进行。没有服务器也可以先做任务和内容贡献。
+
+需要直接发表长文，可使用[详细实操文章](x-long-article.zh-CN.md)；发布前看[Mindshare 活动规则](mindshare.zh-CN.md)。
+
 ## 1. 把入口放对
 
 | 入口 | 用途 | 看什么结果 |
@@ -11,10 +21,11 @@
 | [Quest](https://quest.quip.network/) | 社区任务和签到等 | 当前账号、任务状态、Quest 积分 |
 | [Quip Account](https://account.quip.network/) | 创建和管理 Quip 智能账户、账户关联 | 连接的父钱包、所选网络、账户是否已经部署 |
 | [Quip Points](https://points.quip.network/) | 公开查询 QP 分类和邀请情况 | 总分、节点分、邀请人数、是否找到该钱包 |
+| [Mindshare](https://mindshare.quip.network/) | X 内容贡献活动 | 关联 X、内容、排名与活动奖励 |
 | [QuipSwap](https://swap.quip.network/) | 实际交换或界面提供的模拟功能 | 所在模式、结算状态和账户 |
 | [Aglais 浏览器](https://portal.aglais.quip.network/) | 测试链记录 | 节点身份、链上参与和获胜情况 |
 
-Quest 和 QP 属于不同活动，不能把两个数字相加当成一个余额。AGLS 是 Aglais 测试币；EVM 链上存入智能账户的 ETH 等资产是另一回事。
+Quest、Mindshare 和 QP 有各自的活动入口与统计口径，不能直接把数字相加当成一个余额。AGLS 是 Aglais 测试币；EVM 链上存入智能账户的 ETH 等资产是另一回事。
 
 ## 2. 先准备一个明确的钱包和 X 账号
 
@@ -39,6 +50,14 @@ Quest 和 QP 属于不同活动，不能把两个数字相加当成一个余额�
 不同任务可能要求 X 或 Discord 等授权。只完成自己明确要做的任务；验证码、账号授权、钱包签名等步骤由本人核对。没有必要为了“活跃”主动私聊陌生人或反复发无关消息。
 
 记录时写清楚：日期、账号、任务名、提交链接、页面状态、Quest 积分。不要把 Quest 显示的分数填到 QP 节点统计里。
+
+### 发布内容参加 Mindshare
+
+在 Quest 关联要发布内容的 X 账号。文章和对应主帖明确提及 `@quipnetwork`，围绕真实体验、可复现步骤和具体问题来写。官方活动强调原创与信息含量，并参考互动、传播等因素；发布不等于已经获得奖励。[Mindshare 官方说明](https://mindshare.quip.network/)
+
+公开页没有列出强制话题标签，也没有说明 X Articles 一定会被自动识别。因此可在 X 主帖保留核心结论、账号提及和文章链接，再按 Quest 实际页面核对状态。不要把重复发帖、互刷或群发聊天当成贡献。
+
+规则和更新时间的核对放在[活动说明](mindshare.zh-CN.md)。
 
 ## 4. QP 分类怎么核对
 
@@ -86,6 +105,19 @@ https://account.quip.network/?ref=邀请人的公开EVM地址
 
 推荐先用有余量的现有 Ubuntu 22.04/24.04 或 Debian 12/13 服务器。准备 Python 3.10+、Docker 和 Compose；CPU 镜像实际验证的是 Linux x86_64，本版本不宣称已经验证 ARM。
 
+先核对环境：
+
+```bash
+uname -m
+python3 --version
+docker --version
+docker compose version
+free -h
+df -h /
+```
+
+通常 `x86_64` 对应本工具的部署架构；Python 需要 3.10 或更新版本。`docker` 命令存在但无法连接守护进程时，先检查现有 Docker，别反复覆盖安装。1GiB 是单个矿工容器的上限，宿主机系统和其他服务还要另留资源。
+
 ```bash
 curl -fL https://raw.githubusercontent.com/q3579338/quip-node-kit/v0.1.0/install.sh -o quip-install.sh
 sudo bash quip-install.sh \
@@ -103,6 +135,19 @@ bash quip-install.sh \
 ```
 
 `--dry-run` 不启动容器、不联网校验 RPC、不写运行配置。真正安装才会连接 RPC 和下载官方固定摘要镜像。无 Docker 的新系统可显式增加 `--install-docker`；不要拿这个选项强行覆盖旧 Docker 环境。
+
+这个预演针对矿工部署计划。若使用单独下载的 `install.sh`，引导脚本仍需联网下载并校验管理程序；下载完整仓库后，Python 管理程序本身的预演不联网。
+
+新系统可这样显式安装 Docker 并部署：
+
+```bash
+sudo bash quip-install.sh \
+  --install-docker \
+  --wallet 0x替换成你的公开EVM地址 \
+  --public-host 替换成你的IP或已有网关域名
+```
+
+自动安装 Docker 仅支持脚本识别的 Ubuntu/Debian，并拒绝覆盖已知冲突环境。其他发行版先按 Docker 官方文档准备环境。
 
 首次启动，官方矿工镜像在服务器本地生成独立节点身份，使用免费测试网水龙头取得 AGLS 并登记。这与向 EVM 智能账户充值 ETH 无关，不要求把主钱包私钥交给服务器。[官方部署说明](https://github.com/QuipNetwork/nodes.quip.network)
 
@@ -132,6 +177,17 @@ sudo python3 /opt/quip-node-kit-data/quipctl.py status
 
 一个 EVM 地址可以写进多个节点的公开描述，但这不是自动完成的链上钱包授权或 X 关联，也不保证每个节点独立获得一份积分。多个钱包的资格更要按项目规则处理，不以修改 IP、伪造硬件或重复账户来推断合法收益。
 
+有足够核心和内存时，**首次部署**可使用：
+
+```bash
+sudo bash quip-install.sh \
+  --wallet 0x替换成你的公开EVM地址 \
+  --public-host 替换成你的IP或已有网关域名 \
+  --instances 4
+```
+
+已经按一个实例安装后，不要直接改成四个实例并期待覆盖成功。本版本会拒绝同一状态目录里的不一致参数，保护已有身份。新建另一组需要专门的状态目录、未占用的管理端口，并检查 CPU 分配；默认优先核心可能与旧组重叠，不能只换目录就认定资源已隔离。需要扩容现有组时先做明确迁移计划。
+
 ## 10. 怎么测自己的实际积分增量
 
 部署前记一份快照，至少间隔 24 小时再记一份。在同一钱包、同一积分类型下比较：
@@ -154,7 +210,38 @@ python3 quipctl.py compare ./snapshots/第一份.json ./snapshots/第二份.json
 
 本版本没有自动更新或自动清理功能。链升级时先查官方公告和新版本兼容性；不要为了追版本直接重装、覆盖数据或重新生成身份。
 
-## 12. 常见问题
+常用命令放在这里，默认 root 部署使用 `/opt/quip-node-kit-data`；自定义目录需要加 `--state-dir`：
+
+```bash
+sudo python3 /opt/quip-node-kit-data/quipctl.py status
+sudo python3 /opt/quip-node-kit-data/quipctl.py logs --instance 1
+sudo python3 /opt/quip-node-kit-data/quipctl.py stop
+sudo python3 /opt/quip-node-kit-data/quipctl.py restart
+```
+
+只修改某个矿工描述里的公开归属地址：
+
+```bash
+sudo python3 /opt/quip-node-kit-data/quipctl.py set-wallet \
+  0x替换成新的公开EVM地址 --instance 1
+```
+
+这会重启选定矿工以读取新配置，保留节点密钥和历史；配置会先备份。它不会替你关联 X，也不能保证历史积分转移到新地址。
+
+停机备份时，保存整个专用状态目录，至少包含管理记录、配置、各实例身份与所需历史。将备份放在自己控制的私有位置。仓库没有通用跨主机一键恢复命令，恢复前要重新核对目录、权限、CPU 和端口，避免同一身份同时运行。
+
+## 12. 按现象排查
+
+| 现象 | 先核对什么 | 应保留什么 |
+| --- | --- | --- |
+| 容器未运行 | 状态错误、容器摘要、Docker 是否正常、端口冲突 | 完整数据目录和身份 |
+| 运行但未登记 | RPC 是否可用、是否同一创世区块、水龙头登记是否重试 | 原身份，别删密钥重来 |
+| 已登记但未计算 | 链同步、任务分配、矿工日志摘要、CPU 与内存限制 | 配置与历史，别盲目多开 |
+| 计算结果增加、没有获胜 | 计算结果是否达到链上门槛；提交与获胜是独立字段 | 真实结果，不把它写成已获奖励 |
+| QP 不变 | 父钱包、X 资格、官网分类、接口是否识别、观察时长 | 两次带时间的快照 |
+| 新账户邀请没显示 | `ref`、受邀方地址、账户实际部署状态、官网同步 | 交易/账户与推荐记录 |
+
+## 13. 常见问题
 
 **显示没有积分，是节点坏了吗？** 不一定。先看查询的 EVM 地址是否正确，再看官网资格和索引状态。节点地址 `5…` 不能直接填进只接受 `0x…` 的 QP 查询框。
 
